@@ -1,4 +1,3 @@
-streamlit
-torch
-openai-whisper
-os
+streamlit==1.28.0
+torch==1.13.1
+openai-whisper==20230314
