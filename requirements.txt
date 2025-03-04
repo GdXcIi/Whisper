@@ -1,3 +1,4 @@
 streamlit==1.42.2
 torch
+ffmpeg
 openai-whisper
