@@ -1,6 +1,7 @@
 import streamlit as st
 import whisper as wsp
 import os
+import time
 
 st.header("Transcription d'audios")
 
@@ -21,7 +22,8 @@ st.subheader(f"Modèle sélectionné : {model_choisi}")
 # Charger le modèle avec un spinner
 with st.spinner("Chargement du modèle..."):
     model = wsp.load_model(model_mapping[model_choisi])
-st.success("Modèle chargé avec succès !")
+with st.success("Modèle chargé avec succès !"):
+    time.sleep(10)
 
 def transcrire_audio(fichier_a_transcrire):
     if fichier_a_transcrire is not None:
