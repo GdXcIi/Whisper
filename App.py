@@ -22,8 +22,7 @@ st.subheader(f"Modèle sélectionné : {model_choisi}")
 # Charger le modèle avec un spinner
 with st.spinner("Chargement du modèle..."):
     model = wsp.load_model(model_mapping[model_choisi])
-while time.sleep(10):
-    st.success("Modèle chargé avec succès !")
+st.toast("Modèle chargé avec succès", icon="✅", duration=10)
 
 def transcrire_audio(fichier_a_transcrire):
     if fichier_a_transcrire is not None:
