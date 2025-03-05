@@ -53,5 +53,5 @@ transcrire = st.button("Transcrire")
 if file_uploaded is not None:
     if transcrire:
         transcrire(file_uploaded)
-elif file_uploaded is None:
-    st.warning("Veuillez uploader un fichier avant de lancer la transcription.")
+    else:
+        st.warning("Veuillez uploader un fichier avant de lancer la transcription.")
