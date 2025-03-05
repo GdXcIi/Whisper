@@ -23,7 +23,7 @@ st.subheader(f"Modèle sélectionné : {model_choisi}")
 with st.spinner("Chargement du modèle..."):
     model = wsp.load_model(model_mapping[model_choisi])
 message_placeholder = st.empty()
-message_placeholder.succes("Modèle chargé avec succès !")
+message_placeholder.success("Modèle chargé avec succès !")
 time.sleep(2)
 message_placeholder.empty()
 
