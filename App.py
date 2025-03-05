@@ -21,15 +21,16 @@ st.subheader(f"Modèle sélectionné : {model_choisi}")
 # Charger le modèle une seule fois
 with st.spinner("Chargement du modèle..."):
     model = wsp.load_model(model_mapping[model_choisi])
+st.success("Modèle chargé avec succès !")
 
-def convertir(fichier_a_convertir):
-    if fichier_a_convertir is not None:
+def transcrire(fichier_a_transcrire):
+    if fichier_a_transcrire is not None:
         try:
             temp_file = "temp_audio.mp3"
 
             # Sauvegarde du fichier temporaire
             with open(temp_file, "wb") as f:
-                f.write(fichier_a_convertir.getbuffer())
+                f.write(fichier_a_transcrire.getbuffer())
 
             # Transcription
             with st.spinner("Transcription du modèle en cours..."):
@@ -51,6 +52,6 @@ transcrire = st.button("Transcrire")
 
 if file_uploaded is not None:
     if transcrire:
-        convertir(file_uploaded)
-else:
+        transcrire(file_uploaded)
+elif file_uploaded is None:
     st.warning("Veuillez uploader un fichier avant de lancer la transcription.")
