@@ -22,7 +22,10 @@ st.subheader(f"Modèle sélectionné : {model_choisi}")
 # Charger le modèle avec un spinner
 with st.spinner("Chargement du modèle..."):
     model = wsp.load_model(model_mapping[model_choisi])
-st.toast("Modèle chargé avec succès", icon="✅", duration=10)
+succes_modelLoad = st.success("Modèle chargé avec succès !")
+time.sleep(5)
+succes_modelLoad.emty()
+
 
 def transcrire_audio(fichier_a_transcrire):
     if fichier_a_transcrire is not None:
@@ -41,11 +44,12 @@ def transcrire_audio(fichier_a_transcrire):
             st.markdown("#### Transcription :")
             st.write(result["text"])
 
-            # Suppression du fichier temporaire
-            os.remove(temp_file)
-
         except Exception as e:
             st.error(f"Erreur lors de la transcription : {e}")
+        
+        finally:
+            if os.path.exists(temp_file):
+                os.remove(temp_file)
 
 file_uploaded = st.file_uploader("Déposez un fichier audio ici :", type=["mp3", "wav", "m4a"])
 
