@@ -26,7 +26,7 @@ with st.spinner("Chargement du modèle..."):
 # Affichage temporaire du message de succès
 async def afficher_message():
     st.toast("Modèle chargé avec succès", icon="✅")
-    await asyncio.sleep(10)
+    await asyncio.sleep(2)
 
 asyncio.run(afficher_message())
 
