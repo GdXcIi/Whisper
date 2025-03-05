@@ -19,7 +19,8 @@ model_choisi = st.sidebar.radio("Choisissez un modèle :", list(model_mapping.ke
 st.subheader(f"Modèle sélectionné : {model_choisi}")
 
 # Charger le modèle une seule fois
-model = wsp.load_model(model_mapping[model_choisi])
+with st.spinner("Chargement du modèle..."):
+    model = wsp.load_model(model_mapping[model_choisi])
 
 def convertir(fichier_a_convertir):
     if fichier_a_convertir is not None:
@@ -31,7 +32,8 @@ def convertir(fichier_a_convertir):
                 f.write(fichier_a_convertir.getbuffer())
 
             # Transcription
-            result = model.transcribe(temp_file)
+            with st.spinner("Transcription du modèle en cours..."):
+                result = model.transcribe(temp_file)
 
             # Affichage du texte transcrit
             st.markdown("### Transcription :")
@@ -45,8 +47,10 @@ def convertir(fichier_a_convertir):
 
 file_uploaded = st.file_uploader("Déposez un fichier audio ici :", type=["mp3", "wav", "m4a"])
 
+transcrire = st.button("Transcrire")
+
 if file_uploaded is not None:
-    if st.button("Transcrire"):
+    if transcrire:
         convertir(file_uploaded)
 else:
     st.warning("Veuillez uploader un fichier avant de lancer la transcription.")
