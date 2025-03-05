@@ -19,12 +19,13 @@ model_choisi = st.sidebar.radio("Choisissez un modèle :", list(model_mapping.ke
 
 st.subheader(f"Modèle sélectionné : {model_choisi}")
 
-# Charger le modèle avec un spinner
+# Charger le modèle avec un spinner puis message de succès
 with st.spinner("Chargement du modèle..."):
     model = wsp.load_model(model_mapping[model_choisi])
-succes_modelLoad = st.success("Modèle chargé avec succès !")
-time.sleep(5)
-succes_modelLoad.emty()
+message_placeholder = st.empty()
+message_placeholder.succes("Modèle chargé avec succès !")
+time.sleep(2)
+message_placeholder.empty()
 
 
 def transcrire_audio(fichier_a_transcrire):
