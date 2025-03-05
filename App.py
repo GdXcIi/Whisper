@@ -18,12 +18,12 @@ model_choisi = st.sidebar.radio("Choisissez un modèle :", list(model_mapping.ke
 
 st.subheader(f"Modèle sélectionné : {model_choisi}")
 
-# Charger le modèle une seule fois
+# Charger le modèle avec un spinner
 with st.spinner("Chargement du modèle..."):
     model = wsp.load_model(model_mapping[model_choisi])
 st.success("Modèle chargé avec succès !")
 
-def transcrire(fichier_a_transcrire):
+def transcrire_audio(fichier_a_transcrire):
     if fichier_a_transcrire is not None:
         try:
             temp_file = "temp_audio.mp3"
@@ -33,11 +33,11 @@ def transcrire(fichier_a_transcrire):
                 f.write(fichier_a_transcrire.getbuffer())
 
             # Transcription
-            with st.spinner("Transcription du modèle en cours..."):
+            with st.spinner("Transcription en cours..."):
                 result = model.transcribe(temp_file)
 
             # Affichage du texte transcrit
-            st.markdown("### Transcription :")
+            st.markdown("#### Transcription :")
             st.write(result["text"])
 
             # Suppression du fichier temporaire
@@ -48,10 +48,10 @@ def transcrire(fichier_a_transcrire):
 
 file_uploaded = st.file_uploader("Déposez un fichier audio ici :", type=["mp3", "wav", "m4a"])
 
-transcrire = st.button("Transcrire")
+bouton_transcrire = st.button("Transcrire")
 
-if file_uploaded is not None:
-    if transcrire:
-        transcrire(file_uploaded)
+if bouton_transcrire:
+    if file_uploaded is not None:
+        transcrire_audio(file_uploaded)
     else:
         st.warning("Veuillez uploader un fichier avant de lancer la transcription.")
