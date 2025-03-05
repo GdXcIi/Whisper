@@ -1,7 +1,7 @@
 import streamlit as st
-import whisper as wsp
+import whisper
 import os
-import time
+import asyncio
 
 st.header("Transcription d'audios")
 
@@ -19,16 +19,17 @@ model_choisi = st.sidebar.radio("Choisissez un modèle :", list(model_mapping.ke
 
 st.subheader(f"Modèle sélectionné : {model_choisi}")
 
-# Charger le modèle avec un spinner puis message de succès
+# Charger le modèle avec un spinner
 with st.spinner("Chargement du modèle..."):
-    charging_model = True
-    model = wsp.load_model(model_mapping[model_choisi])
-if charging_model == False:
-    message_placeholder = st.empty()
-    message_placeholder.success("Modèle chargé avec succès !")
-    time.sleep(2)
-    message_placeholder.empty()
+    model = whisper.load_model(model_mapping[model_choisi])
 
+# Affichage temporaire du message de succès
+async def afficher_message():
+    st.toast("Modèle chargé avec succès", icon="✅")
+    await asyncio.sleep(10)
+    st.rerun()
+
+asyncio.run(afficher_message())
 
 def transcrire_audio(fichier_a_transcrire):
     if fichier_a_transcrire is not None:
@@ -47,12 +48,11 @@ def transcrire_audio(fichier_a_transcrire):
             st.markdown("#### Transcription :")
             st.write(result["text"])
 
+            # Suppression du fichier temporaire
+            os.remove(temp_file)
+
         except Exception as e:
             st.error(f"Erreur lors de la transcription : {e}")
-        
-        finally:
-            if os.path.exists(temp_file):
-                os.remove(temp_file)
 
 file_uploaded = st.file_uploader("Déposez un fichier audio ici :", type=["mp3", "wav", "m4a"])
 
